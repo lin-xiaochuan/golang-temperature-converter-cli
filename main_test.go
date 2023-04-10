@@ -42,11 +42,7 @@ func TestCheckForArgumentsM1(t *testing.T) {
 			t.Fatal(err)
 		}
 		// Runs the program with not enough arguments.
-		// dir = strings.ReplaceAll(dir, "\\", "/")
-		name := path.Join(dir, binaryName)
-		name = strings.ReplaceAll(name, "/", "\\")
-		// cmd := exec.Command(path.Join(dir, binaryName), []string{}...)
-		cmd := exec.Command(name, []string{}...)
+		cmd := exec.Command(path.Join(dir, binaryName), []string{}...)
 		output, err := cmd.CombinedOutput()
 		if err == nil || !strings.Contains(string(output), errInvalidArguments.Error()) {
 			t.Fatal("Did not validate command line arguments properly")
