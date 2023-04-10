@@ -15,7 +15,7 @@ import (
 	"testing"
 )
 
-var binaryName = "tempconverterTestBinary"
+var binaryName = "t.exe" //"tempconverterTestBinary"
 
 func TestMain(m *testing.M) {
 	build := exec.Command("go", "build", "-o", binaryName)
@@ -42,7 +42,11 @@ func TestCheckForArgumentsM1(t *testing.T) {
 			t.Fatal(err)
 		}
 		// Runs the program with not enough arguments.
-		cmd := exec.Command(path.Join(dir, binaryName), []string{}...)
+		// dir = strings.ReplaceAll(dir, "\\", "/")
+		name := path.Join(dir, binaryName)
+		name = strings.ReplaceAll(name, "/", "\\")
+		// cmd := exec.Command(path.Join(dir, binaryName), []string{}...)
+		cmd := exec.Command(name, []string{}...)
 		output, err := cmd.CombinedOutput()
 		if err == nil || !strings.Contains(string(output), errInvalidArguments.Error()) {
 			t.Fatal("Did not validate command line arguments properly")
